@@ -15,5 +15,3 @@ class Config(BaseSettings):
     kafka_topic: str
     auto_offset_reset: str
     group_id: str
-
-

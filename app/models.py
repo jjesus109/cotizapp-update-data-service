@@ -1,7 +1,5 @@
 from typing import TypedDict
 
-from app.config import Config
-
 from pydantic import BaseModel, Field
 from bson import ObjectId
 
@@ -40,6 +38,7 @@ class ProductModel(BaseModel):
         arbitrary_types_allowed = True
         json_encoders = {ObjectId: str}
 
+
 class ServiceModel(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     name: str = Field(...)
@@ -60,7 +59,7 @@ class ServiceModel(BaseModel):
             }
         }
 
+
 class DataRelation(TypedDict):
     model: BaseModel
     collection_name: str
-

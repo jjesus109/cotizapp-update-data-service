@@ -40,14 +40,18 @@ def create_consumer() -> Consumer:
     }
     return Consumer(kafka_conf)
 
+
 def set_logger():
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
     ch = logging.StreamHandler()
     ch.setLevel(logging.DEBUG)
-    formatter = logging.Formatter('%(asctime)s %(name)s %(levelname)s: %(message)s')
+    formatter = logging.Formatter(
+        '%(asctime)s %(name)s %(levelname)s: %(message)s'
+    )
     ch.setFormatter(formatter)
     logger.addHandler(ch)
+
 
 TYPED_MODEL = {
     "Service": DataRelation(

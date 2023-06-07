@@ -14,16 +14,27 @@ EMPTY_COUNT = 0
 ELEMENT_FOUND = 1
 conf = Config()
 
-async def insert_data(connection: AsyncIOMotorDatabase, data: BaseModel, collection_name: str):
+
+async def insert_data(
+    connection: AsyncIOMotorDatabase,
+    data: BaseModel,
+    collection_name: str
+):
     data_dict = data.dict()
     data_dict["_id"] = str(data_dict["id"])
     data_dict.pop("id")
     try:
         await connection[collection_name].insert_one(data_dict)
-    except (ConnectionFailure, ExecutionTimeout) as e:
+    except (ConnectionFailure, ExecutionTimeout):
         raise InsertionError("Could not insert element in DB")
 
-async def update_data(connection: AsyncIOMotorDatabase, data_id: str, data: Any, collection_name: str):
+
+async def update_data(
+    connection: AsyncIOMotorDatabase,
+    data_id: str,
+    data: Any,
+    collection_name: str
+):
     query = {"_id": data_id}
     data_dict = data.dict()
     data_dict.pop("id")
@@ -36,7 +47,11 @@ async def update_data(connection: AsyncIOMotorDatabase, data_id: str, data: Any,
         raise InsertionError("Could not update element in DB")
 
 
-async def query_data(connection: AsyncIOMotorDatabase, data_id: str, collection_name: str):
+async def query_data(
+    connection: AsyncIOMotorDatabase,
+    data_id: str,
+    collection_name: str
+):
     query = {"_id": data_id}
     try:
         element = await connection[collection_name].find(
@@ -51,4 +66,3 @@ async def query_data(connection: AsyncIOMotorDatabase, data_id: str, collection_
             "Element not found in DB"
         )
     return element[0]
-

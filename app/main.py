@@ -41,8 +41,8 @@ async def main():
             continue
         try:
             decoded_data = json.loads(msg.value().decode('utf-8'))
-        except:
-            log.error(f"Could not decode message: {msg.value()}")
+        except Exception as e:
+            log.error(f"Could not decode message: {msg.value()} due to: {e}")
             continue
         type = decoded_data.get("type")
         data = TYPED_MODEL.get(type)
@@ -90,6 +90,6 @@ async def main():
                 f"Could not update element id: {data_got.id} in DB"
             )
         log.info("Element updated!")
-    
+
 if __name__ == "__main__":
     asyncio.run(main())
