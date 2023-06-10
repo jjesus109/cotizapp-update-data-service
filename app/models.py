@@ -1,4 +1,5 @@
-from typing import TypedDict
+from datetime import datetime
+from typing import TypedDict, Optional, List, Union
 
 from pydantic import BaseModel, Field
 from bson import ObjectId
@@ -60,6 +61,58 @@ class ServiceModel(BaseModel):
         }
 
 
+class Client(BaseModel):
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    name: str = Field(...)
+    location: str = Field(...)
+    email: str = Field(...)
+    phone_number: int = Field(...)
+
+
+    class Config:
+        allow_population_by_field_name = True
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+
+
+class QuoterModel(BaseModel):
+
+    id: PyObjectId
+    name: str
+    date: datetime
+    subtotal: float
+    iva: float
+    total: float
+    percentage_in_advance_pay: float
+    revenue_percentage: float
+    first_pay: float
+    second_pay: float
+    description: str
+    client: Client
+    services: Optional[List[ServiceModel]] = []
+    products: Optional[List[ProductModel]] = []
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+
+class SellModel(BaseModel):
+    id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    date: datetime = Field()
+    quoter_id: str = Field()
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {ObjectId: str}
+
+
 class DataRelation(TypedDict):
     model: BaseModel
     collection_name: str
+
+
+class MessageFormat(BaseModel):
+    type: str
+    content: Union[SellModel, QuoterModel, ProductModel, ServiceModel]
+    class Config:
+        arbitrary_types_allowed = True

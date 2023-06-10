@@ -1,3 +1,4 @@
+import json
 from typing import Any
 
 from app.config import Config
@@ -20,8 +21,9 @@ async def insert_data(
     data: BaseModel,
     collection_name: str
 ):
-    data_dict = data.dict()
-    data_dict["_id"] = str(data_dict["id"])
+    decoded = data.json(encoder=str, by_alias=True)
+    data_dict = json.loads(decoded)
+    data_dict["_id"] = data_dict.get("id")
     data_dict.pop("id")
     try:
         await connection[collection_name].insert_one(data_dict)

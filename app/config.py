@@ -6,6 +6,8 @@ class Config(BaseSettings):
     mongo_db: str
     products_collec: str
     services_collec: str
+    quoters_collec: str
+    sales_collec: str
     stream_consume: bool
     kafka_server: str
     kafka_protocol: str

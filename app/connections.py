@@ -2,7 +2,13 @@ import logging
 
 from app.config import Config
 from app.errors import DBConnectionError
-from app.models import ServiceModel, ProductModel, DataRelation
+from app.models import (
+    ServiceModel,
+    ProductModel,
+    DataRelation,
+    QuoterModel,
+    SellModel
+)
 
 from motor.motor_asyncio import AsyncIOMotorClient
 from motor.motor_asyncio import AsyncIOMotorDatabase
@@ -62,4 +68,12 @@ TYPED_MODEL = {
         model=ProductModel,
         collection_name=conf.products_collec
     ),
+    "Quoter": DataRelation(
+        model=QuoterModel,
+        collection_name=conf.quoters_collec
+    ),
+    "Sale": DataRelation(
+        model=SellModel,
+        collection_name=conf.sales_collec
+    )
 }

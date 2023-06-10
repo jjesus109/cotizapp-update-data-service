@@ -8,3 +8,7 @@ class ElementNotFoundError(Exception):
 
 class InsertionError(Exception):
     """When there was a problem while inserting a DB"""
+
+
+class MessageProcessingError(Exception):
+    """When could not process data from message broker"""
