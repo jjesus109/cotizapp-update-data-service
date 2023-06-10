@@ -68,7 +68,6 @@ class Client(BaseModel):
     email: str = Field(...)
     phone_number: int = Field(...)
 
-
     class Config:
         allow_population_by_field_name = True
         arbitrary_types_allowed = True
@@ -96,6 +95,7 @@ class QuoterModel(BaseModel):
         arbitrary_types_allowed = True
         json_encoders = {ObjectId: str}
 
+
 class SellModel(BaseModel):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
     date: datetime = Field()
@@ -114,5 +114,6 @@ class DataRelation(TypedDict):
 class MessageFormat(BaseModel):
     type: str
     content: Union[SellModel, QuoterModel, ProductModel, ServiceModel]
+
     class Config:
         arbitrary_types_allowed = True

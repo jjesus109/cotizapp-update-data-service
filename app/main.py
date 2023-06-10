@@ -6,7 +6,6 @@ from app.connections import (
     create_connection,
     create_consumer,
     set_logger,
-    
 )
 from app.business import consumer_logic
 from app.errors import MessageProcessingError
