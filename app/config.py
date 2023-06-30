@@ -8,6 +8,7 @@ class Config(BaseSettings):
     services_collec: str
     quoters_collec: str
     sales_collec: str
+    clients_collec: str
     stream_consume: bool
     kafka_server: str
     kafka_protocol: str

@@ -23,8 +23,9 @@ async def insert_data(
 ):
     decoded = data.json(encoder=str, by_alias=True)
     data_dict = json.loads(decoded)
-    data_dict["_id"] = data_dict.get("id")
-    data_dict.pop("id")
+    if data_dict.get("id"):
+        data_dict["_id"] = data_dict.get("id")
+        data_dict.pop("id")
     try:
         await connection[collection_name].insert_one(data_dict)
     except (ConnectionFailure, ExecutionTimeout):
@@ -38,7 +39,8 @@ async def update_data(
     collection_name: str
 ):
     query = {"_id": data_id}
-    data_dict = data.dict()
+    decoded = data.json(encoder=str, by_alias=True)
+    data_dict = json.loads(decoded)
     data_dict.pop("id")
     values = {
         "$set": data_dict

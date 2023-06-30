@@ -21,7 +21,7 @@ from motor.motor_asyncio import AsyncIOMotorDatabase
 log = logging.getLogger(__name__)
 
 
-async def consumer_logic(nosql_conn: AsyncIOMotorDatabase, msg: bytes):
+async def process_message(nosql_conn: AsyncIOMotorDatabase, msg: bytes):
     try:
         decoded_data = json.loads(msg.value().decode('utf-8'))
     except Exception as e:

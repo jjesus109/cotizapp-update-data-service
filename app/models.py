@@ -111,9 +111,18 @@ class DataRelation(TypedDict):
     collection_name: str
 
 
+content_acepted = Union[
+    SellModel,
+    QuoterModel,
+    ProductModel,
+    ServiceModel,
+    Client
+]
+
+
 class MessageFormat(BaseModel):
     type: str
-    content: Union[SellModel, QuoterModel, ProductModel, ServiceModel]
+    content: content_acepted
 
     class Config:
         arbitrary_types_allowed = True

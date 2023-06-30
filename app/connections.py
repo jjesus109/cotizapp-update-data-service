@@ -7,7 +7,8 @@ from app.models import (
     ProductModel,
     DataRelation,
     QuoterModel,
-    SellModel
+    SellModel,
+    Client,
 )
 
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -75,5 +76,9 @@ TYPED_MODEL = {
     "Sale": DataRelation(
         model=SellModel,
         collection_name=conf.sales_collec
-    )
+    ),
+    "Client": DataRelation(
+        model=Client,
+        collection_name=conf.clients_collec
+    ),
 }

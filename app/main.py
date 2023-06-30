@@ -7,7 +7,7 @@ from app.connections import (
     create_consumer,
     set_logger,
 )
-from app.business import consumer_logic
+from app.business import process_message
 from app.errors import MessageProcessingError
 
 conf = Config()
@@ -29,7 +29,7 @@ async def main():
         if msg.error():
             log.error(f"Error while consuming messages: {msg.error()}")
         try:
-            await consumer_logic(nosql_conn, msg)
+            await process_message(nosql_conn, msg)
         except MessageProcessingError as e:
             log.error(e)
             continue
